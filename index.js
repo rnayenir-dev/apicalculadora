@@ -55,7 +55,7 @@ app.post("/api/dividir", (req, res) => {
 })
 
 //POTENCIA
-app.post("/api/potencia", (req, res) => {
+app.post("/api/potência", (req, res) => {
   const num1 = req.body.num1;
   const num2 = req.body.num2;
 
@@ -72,6 +72,37 @@ app.post("/api/raiz", (req, res) => {
 
   res.json({ message: `Resultado: ${resultado}` });
 });
+
+app.get("/api/operacoes", (req, res) => {
+  const operacoes = [
+  { "operacao": "Celsius para Fahrenheit", "rota": "/api/celsius-fahrenheit" },
+  { "operacao": "Fahrenheit para Celsius", "rota": "/api/fahrenheit-celsius" },
+  { "operacao": "Celsius para Kelvin", "rota": "/api/celsius-kelvin" }
+  ]
+  res.status(200).json(operacoes)
+})
+
+//CELSIUS
+app.post("/api/celsius-fahrenheit", (req, res) => {
+  const celsius = Number(req.body.celsius)
+  const resultado = (celsius * 9/5) + 32
+  res.status(200).json({ message: `Resultado: ${resultado} Farenheit` })
+})
+
+//FARENHEIT
+app.post("/api/fahrenheit-celsius", (req, res) => {
+  const farenheit = Number(req.body.farenheit)
+  const resultado = (farenheit - 32) * 5/9
+  res.status(200).json({ message: `Resultado: ${resultado} Celsius` })
+})
+
+//KELVIN
+//`K = C + 273.15`
+app.post("/api/celsius-kelvin", (req, res) => {
+  const celsius = Number(req.body.celsius)
+  const resultado = celsius + 273.15
+  res.status(200).json({ message: `Resultado: ${resultado} Kelvin` })
+})
 
 app.listen(3000, () => {
   console.log("servidor rodando na porta 3000")
